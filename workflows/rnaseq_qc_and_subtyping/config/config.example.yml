@@ -1,0 +1,22 @@
+# Planning template only: the workflow does not read YAML or this file.
+# A private launcher must set the environment variables listed in ../README.md.
+# Keep any populated local.yml outside the import tree and version control.
+# Data/output paths resolve against the process working directory, not this file.
+
+technical_qc:
+  multiqc_directory: "PATH_TO_MULTIQC_DATA_DIRECTORY"
+  output_directory: "PATH_TO_TECHNICAL_QC_OUTPUT"
+  sample_id_regex: "PROJECT_SAMPLE_ID_REGEX"
+  expected_sample_count: 506
+  expected_patient_count: 506
+
+expression_qc:
+  tximport_rds: "PATH_TO_TXIMPORT_RDS"
+  stage_a_qc_file: "PATH_TO_TECHNICAL_QC_DECISION_FILE"
+  output_directory: "PATH_TO_EXPRESSION_QC_OUTPUT"
+
+sspbc:
+  fpkm_rds: "PATH_TO_FPKM_RDS"
+  counts_rds: "PATH_TO_COUNTS_RDS"
+  main_analysis_include_file: "PATH_TO_MAIN_ANALYSIS_INCLUDE_FILE"
+  output_directory: "PATH_TO_SSPBC_OUTPUT"

@@ -1,0 +1,15 @@
+# Draft only: repository-wide author and release metadata remain unconfirmed.
+cff-version: 1.2.0
+message: "Draft record; use the suggested module citation and underlying method citations pending approval."
+title: "PANTHER-APM-score: RNA-seq QC and SSPBC/ROR module"
+type: software
+authors:
+  - family-names: "Sifakis"
+    given-names: "Emmanouil G."
+version: "DRAFT"
+date-released: "YYYY-MM-DD"
+repository-code: "https://github.com/foukakis-lab/PANTHER-APM-score"
+license: MIT
+# Copyright (c) 2026 Emmanouil G. Sifakis
+# MIT and the copyright notice are finalized for the original QC/SSPBC
+# contribution and its first-party supporting material.

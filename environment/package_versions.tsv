@@ -1,0 +1,16 @@
+component	version
+R	4.6.0
+AnnotationDbi	1.74.0
+BreastSubtypeR	1.4.0
+DESeq2	1.52.0
+edgeR	4.10.1
+matrixStats	1.5.0
+org.Hs.eg.db	3.23.1
+readr	2.2.0
+rrcov	1.7.7
+S4Vectors	0.50.1
+sspbc	1.0
+SummarizedExperiment	1.42.0
+tximport	1.40.0
+utils	4.6.0
+otel	0.2.0
