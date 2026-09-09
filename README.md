@@ -1,52 +1,74 @@
 # PANTHER-APM-score
 
-Planned repository: `foukakis-lab/PANTHER-APM-score`.
+Analysis code for the PANTHER translational study of an antigen processing
+and presentation machinery (APM) score and differential benefit from
+adjuvant dose-dense chemotherapy in high-risk early breast cancer.
 
-This local import candidate contributes the validated PANTHER RNA-seq technical
-QC, expression QC, and SSPBC intrinsic subtyping/ROR workflow. It currently
-contains QC and SSPBC/ROR code, not the complete APM analysis code. These three
-scripts do not reproduce every manuscript result or figure.
+The repository separates RNA-seq quality control and molecular
+characterization workflows from study-specific APM-score analyses.
 
-Start with the [RNA-seq QC and subtyping module](workflows/rnaseq_qc_and_subtyping/README.md)
-for execution order, inputs, environment variables, output descriptions, and
-study-specific safeguards. The module runs independently of APM-specific analyses.
+## Available components
 
-The recorded R environment remains at the repository root: `renv.lock`,
-`.Rprofile`, `renv/`, and [environment records](environment/package_versions.tsv).
-Exact-version reconstruction from documented sources and one complete QC/SSPBC
-run passed on Windows x64 with R 4.6.0, renv 1.2.4, and Bioconductor 3.23.
-All 18 substantive outputs matched the validated reference byte-for-byte, with
-the original working libraries excluded. All previously locked versions remain;
-otel 0.2.0 is now explicit. See [restoration instructions](environment/RESTORE.md)
-for isolation, source records, resolved installation-order issues, and the tested
-scope. Historical session records remain unchanged.
+The current branch contains the
+[RNA-seq QC and subtyping module](workflows/rnaseq_qc_and_subtyping/README.md).
+It implements technical QC using STAR/MultiQC, expression-level QC,
+SSPBC intrinsic subtyping, and RNA-seq risk-of-recurrence (ROR) calculation.
 
-Only code and approved documentation belong in this candidate. Controlled data,
-private configuration, and all validation and analytical outputs remain outside
-this tree. See the [controlled data notice](workflows/rnaseq_qc_and_subtyping/docs/controlled_data_notice.md).
+The module documentation describes execution order, required inputs,
+configuration, outputs, study-specific safeguards, and validation.
+The module can be run independently of APM-specific analyses.
 
-[Contributions](CONTRIBUTORS.md) are limited to confirmed workflow contributions.
-The [module citation](workflows/rnaseq_qc_and_subtyping/CITATION.md) is suggested
-text with release/commit placeholders. [CITATION.cff.draft](CITATION.cff.draft)
-remains a draft. This copy has not been imported into the planned repository.
+APM-score development, validation, and downstream statistical analysis
+code are not yet included in this branch. The available module does
+not reproduce every manuscript result or figure.
 
-## Licensing
+## Software environment
 
-The original PANTHER QC/SSPBC workflow contribution and its first-party supporting
-material are available under the [MIT License](LICENSE).
+The recorded R environment is stored at the repository root in
+`renv.lock`, `.Rprofile`, and `renv/`.
+
+This environment supports the QC/subtyping module. Exact-version
+environment reconstruction and end-to-end execution were validated on
+Windows x64 with R 4.6.0, renv 1.2.4, and Bioconductor 3.23.
+
+See the [restoration instructions](environment/RESTORE.md) and
+[package versions](environment/package_versions.tsv) for the tested
+environment, installation procedure, and scope. This validation does
+not establish compatibility with other operating systems or with
+APM analysis code not yet included.
+
+## Data access
+
+Controlled patient data, expression matrices, private configurations,
+and individual-level analytical outputs are not distributed in this
+repository. Execution requires authorized inputs supplied through the
+documented configuration mechanism.
+
+See the
+[controlled data notice](workflows/rnaseq_qc_and_subtyping/docs/controlled_data_notice.md).
+
+## Contributions and citation
+
+Confirmed contributions are documented in [CONTRIBUTORS.md](CONTRIBUTORS.md).
+The QC/subtyping module includes its own
+[author and maintainer information](workflows/rnaseq_qc_and_subtyping/README.md)
+and [citation guidance](workflows/rnaseq_qc_and_subtyping/CITATION.md).
+
+Repository-wide citation and release metadata remain under preparation
+in [CITATION.cff.draft](CITATION.cff.draft).
+
+## License
+
+The original RNA-seq QC and SSPBC/ROR workflow contribution and its
+first-party supporting material are available under the
+[MIT License](LICENSE).
 
 Copyright (c) 2026 Emmanouil G. Sifakis
 
-This notice applies to that contribution. It does not claim ownership of other
-contributors' analyses, the underlying SSPBC models, external packages, or
-third-party bootstrap code.
+This notice applies to that contribution, not to other contributors'
+analyses or third-party software. Third-party material retains the
+notices documented in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md),
+and external dependencies retain their own licenses.
 
-Third-party material retains the notices documented in
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). External dependencies retain
-their own licenses. The software license does not provide permission to
-distribute controlled patient data; see the
-[controlled data notice](workflows/rnaseq_qc_and_subtyping/docs/controlled_data_notice.md).
-
-[CITATION.cff.draft](CITATION.cff.draft) remains a draft only because repository-wide
-contributor and release metadata are unconfirmed. License selection and the
-copyright notice are finalized for this contribution.
+The software license does not authorize distribution of controlled
+patient data.
