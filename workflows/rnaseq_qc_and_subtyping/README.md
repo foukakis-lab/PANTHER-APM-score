@@ -151,8 +151,8 @@ The validated staging reference produced 506 unique samples/patients,
 365/79/62 technical PASS/FLAG/FAIL, 365/444 strict/main technical sets,
 301/444 final strict/main sets, 444 subtype calls, and 444 finite ROR values.
 These are comparison targets, never values to force. See
-[method details](docs/qc_method_summary.md), [sample flow](docs/sample_flow.md),
-and [historical validation](docs/validation_summary.md). Validation on the
+[method details](docs/qc_method_summary.md) and [sample flow](docs/sample_flow.md).
+Validation on the
 recorded inputs/environment is not a clinical diagnostic claim or a guarantee
 for other cohorts or package versions.
 
