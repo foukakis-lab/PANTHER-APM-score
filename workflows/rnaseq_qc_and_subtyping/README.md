@@ -5,8 +5,9 @@ Workflow author/maintainer: Emmanouil G. Sifakis (@sifakise).
 ## Purpose and scope
 
 This module implements PANTHER STAR-based technical QC, expression-level QC,
-SSPBC intrinsic subtyping, and RNA-seq ROR for the confirmed final 444-patient
-main-analysis set. It starts with 506 sequenced and quantified RNA-seq samples;
+SSPBC intrinsic subtyping, and SSPBC ROR calculation for the confirmed final
+444-patient main-analysis set. It starts with 506 sequenced and quantified
+RNA-seq samples;
 it does not describe selection from all trial participants. It runs independently
 of APM-specific analyses and does not source or require APM analysis code. It does
 not reproduce all manuscript results or figures and is not generalized to other
@@ -141,7 +142,8 @@ comes from stage 2. It does not independently compare against a stored reference
 membership list. Relocation validation compares that ordered list privately.
 
 Subtype input is log2(FPKM + 1), passed through BreastSubtypeR mapping with
-`RawCounts = FALSE`. ROR uses linear FPKM. Supported alias-to-Entrez mappings
+`RawCounts = FALSE`. SSPBC ROR calculation uses linear FPKM with the
+`ssp.ror` model in the `sspbc` package. Supported alias-to-Entrez mappings
 are checked against the recorded annotation package, and both models require
 complete gene coverage in their actual inputs. In BreastSubtypeR 1.4.0,
 `impute = FALSE` disables KNN replacement of NA matrix values; it does not create

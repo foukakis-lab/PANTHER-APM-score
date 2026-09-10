@@ -1,7 +1,7 @@
 # Copyright (c) 2026 Emmanouil G. Sifakis
 # SPDX-License-Identifier: MIT
 
-# PANTHER SSPBC intrinsic subtyping and RNA-seq ROR.
+# PANTHER SSPBC intrinsic subtyping and SSPBC ROR calculation.
 # Workflow author/maintainer: Emmanouil G. Sifakis.
 # Inputs: matching gene-by-sample FPKM/count RDS matrices and final main list.
 # Outputs: ordered subtype calls, probabilities, ROR, and mapping coverage.
@@ -310,7 +310,7 @@ if (any(!is.finite(subtype_probability))) {
   stop("The subtype output contains non-finite probabilities.")
 }
 
-# ROR uses nonnegative linear StringTie FPKM values.
+# SSPBC ROR uses nonnegative linear StringTie FPKM values.
 # Keep this scale separate from the log2(FPKM + 1) subtype input above.
 # When several rows map to one Entrez ID, retain the row with the largest sum.
 mapped_rows <- !is.na(feature_annotation$ENTREZID)

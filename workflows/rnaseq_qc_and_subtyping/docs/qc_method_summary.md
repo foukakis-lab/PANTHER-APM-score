@@ -19,8 +19,11 @@ Genes are filtered with an explicit single-level group in `edgeR::filterByExpr`.
 
 The strict QC set requires technical QC PASS and zero expression review flags. The main-analysis set requires technical QC PASS or FLAG and at most one expression review flag. Exclusion reasons retain all applicable technical and expression-level reasons.
 
-## SSPBC intrinsic subtyping and RNA-seq ROR
+## SSPBC intrinsic subtyping and SSPBC ROR calculation
 
 The four-class subtype model returns LumA, LumB, Her2, or Basal. Subtyping uses `BreastSubtypeR::Mapping` with `RawCounts = FALSE` followed by `BreastSubtypeR::BS_sspbc` with `ssp.name = "ssp.subtype"`. The input is log2(FPKM + 1), as supported by the validated package interface.
 
-RNA-seq ROR uses linear FPKM with `sspbc::applySSP` and `ssp.name = "ssp.ror"`. Gene identifiers are mapped to Entrez identifiers, required model coverage is checked, and output order is matched exactly to the main-analysis inclusion file.
+SSPBC ROR scores are calculated from linear FPKM using
+`sspbc::applySSP` with `ssp.name = "ssp.ror"`. Gene identifiers are mapped to
+Entrez identifiers, required model coverage is checked, and output order is
+matched exactly to the main-analysis inclusion file.

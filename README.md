@@ -12,7 +12,7 @@ characterization workflows from study-specific APM-score analyses.
 The current branch contains the
 [RNA-seq QC and subtyping module](workflows/rnaseq_qc_and_subtyping/README.md).
 It implements technical QC using STAR/MultiQC, expression-level QC,
-SSPBC intrinsic subtyping, and RNA-seq risk-of-recurrence (ROR) calculation.
+SSPBC intrinsic subtyping, and SSPBC risk-of-recurrence (ROR) calculation.
 
 The module documentation describes execution order, required inputs,
 configuration, outputs, study-specific safeguards, and validation.
