@@ -1,0 +1,67 @@
+R version 4.6.0 (2026-04-24 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26100)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] C
+system code page: 65001
+
+time zone: Europe/Stockholm
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.2.1            dplyr_1.2.1                
+ [3] farver_2.1.2                blob_1.3.0                 
+ [5] Biostrings_2.80.1           S7_0.2.2                   
+ [7] fastmap_1.2.0               BreastSubtypeR_1.4.0       
+ [9] digest_0.6.39               lifecycle_1.0.5            
+[11] cluster_2.1.8.3             statmod_1.5.2              
+[13] KEGGREST_1.52.0             RSQLite_3.53.3             
+[15] magrittr_2.0.5              compiler_4.6.0             
+[17] rlang_1.3.0                 tools_4.6.0                
+[19] data.table_1.18.4           rrcov_1.7-7                
+[21] S4Arrays_1.12.0             bit_4.6.0                  
+[23] DelayedArray_0.38.2         RColorBrewer_1.1-3         
+[25] abind_1.4-8                 BiocParallel_1.46.0        
+[27] withr_3.0.3                 BiocGenerics_0.58.1        
+[29] pcaPP_2.0-5                 grid_4.6.0                 
+[31] stats4_4.6.0                e1071_1.7-17               
+[33] colorspace_2.1-3            edgeR_4.10.1               
+[35] ggplot2_4.0.3               scales_1.4.0               
+[37] iterators_1.0.14            SummarizedExperiment_1.42.0
+[39] mvtnorm_1.4-2               cli_3.6.6                  
+[41] crayon_1.5.3                generics_0.1.4             
+[43] otel_0.2.0                  robustbase_0.99-7          
+[45] httr_1.4.8                  tzdb_0.5.0                 
+[47] rjson_0.2.23                DBI_1.3.0                  
+[49] cachem_1.1.0                proxy_0.4-29               
+[51] stringr_1.6.0               parallel_4.6.0             
+[53] AnnotationDbi_1.74.0        impute_1.86.0              
+[55] XVector_0.52.0              matrixStats_1.5.0          
+[57] vctrs_0.7.3                 Matrix_1.7-6               
+[59] IRanges_2.46.0              GetoptLong_1.1.1           
+[61] hms_1.1.4                   S4Vectors_0.50.1           
+[63] bit64_4.8.4                 ggrepel_0.9.8              
+[65] clue_0.3-68                 locfit_1.5-9.12            
+[67] foreach_1.5.2               limma_3.68.4               
+[69] glue_1.8.1                  DEoptimR_1.2-0             
+[71] codetools_0.2-20            stringi_1.8.9              
+[73] shape_1.4.6.1               gtable_0.3.6               
+[75] sspbc_1.0                   GenomicRanges_1.64.0       
+[77] ComplexHeatmap_2.28.0       tibble_3.3.1               
+[79] pillar_1.11.1               Seqinfo_1.2.0              
+[81] circlize_0.4.18             R6_2.6.1                   
+[83] tximport_1.40.0             doParallel_1.0.17          
+[85] lattice_0.23-1              Biobase_2.72.0             
+[87] readr_2.2.0                 png_0.1-9                  
+[89] memoise_2.0.1               class_7.3-24               
+[91] Rcpp_1.1.2                  SparseArray_1.12.2         
+[93] org.Hs.eg.db_3.23.1         DESeq2_1.52.0              
+[95] MatrixGenerics_1.24.0       pkgconfig_2.0.3            
+[97] GlobalOptions_0.1.4        
