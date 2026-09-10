@@ -1,4 +1,5 @@
-# Draft only: repository-wide author and release metadata remain unconfirmed.
+# Draft only: QC/SSPBC module citation and release metadata remain under preparation.
+# This record identifies the confirmed module author; study-level metadata are separate.
 cff-version: 1.2.0
 message: "Draft record; use the suggested module citation and underlying method citations pending approval."
 title: "PANTHER-APM-score: RNA-seq QC and SSPBC/ROR module"
