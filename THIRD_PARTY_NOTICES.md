@@ -10,7 +10,7 @@ No first-party PANTHER license header has been added to these files.
 
 The local renv 1.2.4 DESCRIPTION declares `MIT + file LICENSE`; its LICENSE
 records `YEAR: 2026` and `COPYRIGHT HOLDER: Posit Software, PBC`. The following
-notice applies to the distributed renv bootstrap, independently of the pending
+notice applies to the distributed renv bootstrap, independently of the
 PANTHER copyright notice.
 
 ```text

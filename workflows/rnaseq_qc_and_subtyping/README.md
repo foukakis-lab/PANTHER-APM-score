@@ -37,9 +37,9 @@ PANTHER inputs, not all operating systems or all APM analyses.
 
 ## Configuration and path resolution
 
-Launch from the proposed repository root, `PANTHER-APM-score`, using the
-module-relative script paths below. The local candidate directory serves as
-that root before import. Use the existing environment-variable interface.
+Launch from the repository root, `PANTHER-APM-score`, using the
+module-relative script paths below. Configuration is supplied through
+the documented environment variables.
 
 The scripts do not read a configuration file, parse YAML, or accept workflow
 command-line arguments. [config/config.example.yml](config/config.example.yml)
@@ -53,7 +53,7 @@ All relative data/output paths in environment variables are resolved against
 the process working directory (the repository root), not the script directory,
 module directory, or configuration-file directory. Prefer absolute authorized
 local input paths and fresh private output directories outside this repository.
-Do not place populated configurations or outputs in the import tree.
+Do not place populated configurations or outputs in the repository.
 
 | Stage | Required environment variable | Meaning |
 | --- | --- | --- |
