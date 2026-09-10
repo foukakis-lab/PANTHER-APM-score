@@ -10,9 +10,10 @@ are confirmed:
 
 This module is available in `foukakis-lab/PANTHER-APM-score`.
 Release, publication-date, DOI, and release-specific commit metadata
-have not yet been finalized. Repository-wide citation metadata remain
-in [CITATION.cff.draft](../../CITATION.cff.draft). Cite the associated
-manuscript when its approved publication metadata are available.
+have not yet been finalized. Module citation metadata remain in the local
+[CITATION.cff.draft](CITATION.cff.draft). Study-level citation metadata will be
+added separately. Cite the associated manuscript when its approved publication
+metadata are available.
 
 ## Underlying methods and packages
 

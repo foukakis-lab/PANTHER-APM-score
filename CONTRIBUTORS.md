@@ -1,12 +1,6 @@
-# Confirmed contributions
+# Component contribution records
 
-## Emmanouil G. Sifakis (@sifakise)
+Confirmed component contributions are documented in the
+[RNA-seq QC and SSPBC module contribution record](workflows/rnaseq_qc_and_subtyping/CONTRIBUTORS.md).
 
-- Implementation and validation of the PANTHER technical and expression QC workflow.
-- Implementation and validation of the PANTHER SSPBC intrinsic subtyping and ROR workflow using the underlying packages/models.
-- Workflow documentation and preparation of the RNA-seq QC and subtyping module.
-
-This record describes confirmed workflow contributions. It does not attribute
-development of the underlying SSPBC models or sole authorship of the complete
-APM project to the workflow maintainer. See the
-[method/package citations](workflows/rnaseq_qc_and_subtyping/CITATION.md).
+Study-wide contributions will be expanded as the remaining code is integrated.

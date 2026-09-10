@@ -12,7 +12,8 @@ it does not describe selection from all trial participants. It runs independentl
 of APM-specific analyses and does not source or require APM analysis code. It does
 not reproduce all manuscript results or figures and is not generalized to other
 cohorts. See [CITATION.md](CITATION.md) for the suggested module citation and
-underlying method/package citations.
+underlying method/package citations. See the local
+[contribution record](CONTRIBUTORS.md) and [changelog](CHANGELOG.md).
 
 ## Recorded environment
 
@@ -199,6 +200,6 @@ renv bootstrap. External dependencies retain their own licenses. The software
 license does not provide permission to distribute controlled patient data; see
 the [controlled data notice](docs/controlled_data_notice.md).
 
-[CITATION.md](CITATION.md) and [CITATION.cff.draft](../../CITATION.cff.draft)
-retain unconfirmed release/contributor metadata. License selection and the
+[CITATION.md](CITATION.md) and the module-specific [CITATION.cff.draft](CITATION.cff.draft)
+retain draft module citation and release metadata. License selection and the
 copyright notice are finalized for this contribution.
