@@ -15,6 +15,8 @@ cohorts. See [CITATION.md](CITATION.md) for the suggested module citation and
 underlying method/package citations. See the local
 [contribution record](CONTRIBUTORS.md) and [changelog](CHANGELOG.md).
 
+For the corrected manuscript figure, see [Reproducing Supplementary Figure 13](docs/supplementary_figure_S13.md).
+
 ## Recorded environment
 
 Use the repository-level [renv.lock](../../renv.lock),

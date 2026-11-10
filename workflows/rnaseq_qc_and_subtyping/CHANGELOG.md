@@ -1,5 +1,9 @@
 # QC/SSPBC module changelog
 
+## Unreleased: Supplementary Figure 13
+
+- Added the [figure-generation entry point](scripts/04_supplementary_figure_S13.R) for the corrected historical S13: preseq-only panel A, a 99.9% contour legend key in panel C, and corrected Detect annotations in panel D.
+
 ## Unreleased license finalization
 
 - Finalized the standard MIT LICENSE for the original QC/SSPBC contribution and first-party supporting material with Copyright (c) 2026 Emmanouil G. Sifakis.
