@@ -24,7 +24,7 @@ The expression-QC script requires:
 
 Set `PANTHER_TXIMPORT_RDS`, `PANTHER_STAGE_A_QC_FILE`, and `PANTHER_QC_OUTPUT_DIR`.
 
-## SSPBC subtype and ROR
+## SSPBC intrinsic subtyping
 
 The subtype script requires gene-level FPKM and count RDS objects with the same unique sample identifiers, plus the ordered final main-analysis inclusion file produced by script 02. Set `PANTHER_SSPBC_FPKM_RDS`, `PANTHER_SSPBC_COUNTS_RDS`, `PANTHER_MAIN_ANALYSIS_INCLUDE_FILE`, and `PANTHER_SSPBC_OUTPUT_DIR`.
 

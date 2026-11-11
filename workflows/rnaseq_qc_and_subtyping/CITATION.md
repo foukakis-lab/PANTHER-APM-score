@@ -3,7 +3,7 @@
 Draft suggested text; fill the release and commit placeholders only after they
 are confirmed:
 
-> Sifakis, Emmanouil G. PANTHER RNA-seq QC and SSPBC intrinsic subtyping/ROR
+> Sifakis, Emmanouil G. PANTHER RNA-seq QC and SSPBC intrinsic subtyping
 > workflow. Module `workflows/rnaseq_qc_and_subtyping` in
 > `foukakis-lab/PANTHER-APM-score`. Release: [FUTURE_RELEASE].
 > Commit: [FUTURE_COMMIT].

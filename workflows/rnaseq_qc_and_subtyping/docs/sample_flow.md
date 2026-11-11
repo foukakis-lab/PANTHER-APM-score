@@ -14,4 +14,4 @@ Expression-level QC then produces:
 
 The strict final set requires technical QC PASS and no expression-level review flags. The main-analysis final set requires technical QC PASS or FLAG and no more than one expression-level review flag.
 
-The ordered main-analysis inclusion file is the sole sample-set input to the SSPBC subtype and ROR script. The script requires exactly 444 unique samples and patients and preserves inclusion-file order.
+The ordered main-analysis inclusion file is the sole sample-set input to the SSPBC intrinsic subtyping script. The script requires exactly 444 unique samples and patients and preserves inclusion-file order.
