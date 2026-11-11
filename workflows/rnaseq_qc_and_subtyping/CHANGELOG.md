@@ -1,5 +1,9 @@
 # QC/SSPBC module changelog
 
+## Unreleased: manuscript scope update
+
+- Removed ROR estimation from the active manuscript workflow following the study scope update; this is not a claim that the previous implementation was incorrect. Renamed `scripts/03_intrinsic_subtyping_and_ror_sspbc.R` to `scripts/03_intrinsic_subtyping_sspbc.R` and `PANTHER_SSPBC_subtype_and_ROR_main_analysis.tsv` to `PANTHER_SSPBC_intrinsic_subtypes_main_analysis.tsv`. The result now has exactly `sample`, `patient_id`, `sspbc_intrinsic_subtype`, and `sspbc_subtype_probability`, in that order. ROR-only mapping/coverage rows were removed; shared mapping, intrinsic subtyping, QC, and the package environment are retained. Earlier full-workflow validation remains historical evidence; this revision uses a targeted subtype regression check.
+
 ## Unreleased: Supplementary Figure 13
 
 - Added the [figure-generation entry point](scripts/04_supplementary_figure_S13.R) for the corrected historical S13: preseq-only panel A, a 99.9% contour legend key in panel C, and corrected Detect annotations in panel D.

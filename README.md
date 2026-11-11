@@ -6,9 +6,8 @@ adjuvant dose-dense chemotherapy in high-risk early breast cancer.
 
 ## Available code
 
-The [RNA-seq QC and SSPBC module](workflows/rnaseq_qc_and_subtyping/README.md)
-contains technical QC, expression-level QC, SSPBC intrinsic subtyping,
-and SSPBC risk-of-recurrence (ROR) calculation.
+The [RNA-seq QC and SSPBC intrinsic subtyping module](workflows/rnaseq_qc_and_subtyping/README.md)
+contains technical QC, expression-level QC, and SSPBC intrinsic subtyping.
 
 APM-score development, validation, and downstream statistical analysis
 code are not yet included.

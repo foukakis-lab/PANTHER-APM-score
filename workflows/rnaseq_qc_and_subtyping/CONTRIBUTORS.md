@@ -3,7 +3,7 @@
 ## Emmanouil G. Sifakis (@sifakise)
 
 - Implementation and validation of the PANTHER technical and expression QC workflow.
-- Implementation and validation of the PANTHER SSPBC intrinsic subtyping and ROR workflow using the underlying packages/models.
+- Implementation and validation of the PANTHER SSPBC intrinsic subtyping workflow using the underlying packages/models.
 - Workflow documentation and preparation of the RNA-seq QC and subtyping module.
 
 This record describes confirmed workflow contributions. It does not attribute

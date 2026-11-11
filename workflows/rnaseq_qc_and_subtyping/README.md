@@ -1,11 +1,11 @@
-# PANTHER RNA-seq QC and SSPBC subtyping/ROR
+# PANTHER RNA-seq QC and SSPBC intrinsic subtyping
 
 Workflow author/maintainer: Emmanouil G. Sifakis (@sifakise).
 
 ## Purpose and scope
 
 This module implements PANTHER STAR-based technical QC, expression-level QC,
-SSPBC intrinsic subtyping, and SSPBC ROR calculation for the confirmed final
+and SSPBC intrinsic subtyping for the confirmed final
 444-patient main-analysis set. It starts with 506 sequenced and quantified
 RNA-seq samples;
 it does not describe selection from all trial participants. It runs independently
@@ -22,16 +22,27 @@ For the corrected manuscript figure, see [Reproducing Supplementary Figure 13](d
 Use the repository-level [renv.lock](../../renv.lock),
 [package versions](../../environment/package_versions.tsv),
 [dependency provenance](../../environment/dependency_provenance.tsv), and
-[session record](../../environment/sessionInfo.txt). Validation used R 4.6.0 and
-the recorded installed package versions. All required packages must already be
-available; these scripts stop on missing dependencies and do not install them.
+[session record](../../environment/sessionInfo.txt). Historical full-workflow
+validation used R 4.6.0 and the recorded installed package versions. All required
+packages must already be available; these scripts stop on missing dependencies
+and do not install them.
 
 Exact sspbc 1.0 and org.Hs.eg.db 3.23.1 source archives are now documented
 and tested; their original historical archive identities remain unproven.
-Reconstruction in an isolated Windows/R 4.6.0 library passed, retaining every
-previously locked version and explicitly recording otel 0.2.0. The three stages
-and both tests passed, with all 18 substantive outputs byte-identical to the
-validated reference. See the [restoration instructions](../../environment/RESTORE.md)
+The historical full-workflow reconstruction in an isolated Windows/R 4.6.0
+library passed, retaining every previously locked version and explicitly
+recording otel 0.2.0. Before ROR removal, the three stages and both tests passed,
+with all 18 substantive outputs byte-identical to the then-validated reference.
+That result remains historical evidence; it does not assert byte identity for
+the intentionally changed stage-3 schema.
+
+Historical end-to-end validation used R 4.6.0. The subtype-only
+revision was regression-tested with R 4.6.2 and the retained package
+library, with exact agreement to the historical subtype reference.
+Retained subtype coverage and mapping-summary entries also matched exactly.
+This targeted check ran only stage 3 and its output tests; it does not validate
+the entire workflow under R 4.6.2 or constitute a new clean restore. The recorded
+project environment remains unchanged. See the [restoration instructions](../../environment/RESTORE.md)
 for the resolved source/order issues and isolated execution setup. The copied
 `.Rprofile` and historical session records remain unchanged. Restored-environment
 validation used `Rscript --vanilla` with a private launcher selecting only the
@@ -70,7 +81,7 @@ Do not place populated configurations or outputs in the repository.
 | 3 | `PANTHER_SSPBC_FPKM_RDS` | Nonnegative finite gene-by-sample FPKM matrix RDS, with source gene symbols as row names |
 | 3 | `PANTHER_SSPBC_COUNTS_RDS` | Nonnegative finite count matrix RDS with identical gene rows and sample columns to the FPKM input |
 | 3 | `PANTHER_MAIN_ANALYSIS_INCLUDE_FILE` | Stage 2 ordered `INCLUDE_main_analysis_FINAL.txt` |
-| 3 | `PANTHER_SSPBC_OUTPUT_DIR` | Fresh private subtype/ROR output directory |
+| 3 | `PANTHER_SSPBC_OUTPUT_DIR` | Fresh private intrinsic-subtyping output directory |
 
 `PANTHER_QCA_EXPECTED_SAMPLE_COUNT` and `PANTHER_QCA_EXPECTED_PATIENT_COUNT`
 are optional positive-integer input checks; use 506 for these validated inputs.
@@ -84,12 +95,14 @@ Keep it `false` to match the validated staging output file set.
 After the isolated restored R library paths have been explicitly selected by
 a private launcher and the required environment variables are set, run these
 commands from the repository root. Each stage must complete successfully before
-the next starts. The R executable must be the recorded R 4.6.0 runtime.
+the next starts. For full-workflow reproduction, use the recorded R 4.6.0
+runtime; the R 4.6.2 substitution above applies only to the targeted subtype
+regression.
 
 ```powershell
 Rscript --vanilla workflows/rnaseq_qc_and_subtyping/scripts/01_multiqc_technical_qc.R
 Rscript --vanilla workflows/rnaseq_qc_and_subtyping/scripts/02_expression_qc_core.R
-Rscript --vanilla workflows/rnaseq_qc_and_subtyping/scripts/03_intrinsic_subtyping_and_ror_sspbc.R
+Rscript --vanilla workflows/rnaseq_qc_and_subtyping/scripts/03_intrinsic_subtyping_sspbc.R
 ```
 
 The stage 2 technical input must point to this run's stage 1 CSV. The stage 3
@@ -107,8 +120,12 @@ overwriting earlier outputs.
 | 1 | `INCLUDE_primary_PASS_only.txt`, `INCLUDE_sensitivity_PASS_or_FLAG.txt` | Strict and main technical sets; historical filenames are preserved |
 | 2 | `QC_decisions_per_sample.tsv` | Technical calls, expression-review metrics/flags, final inclusion, and reasons |
 | 2 | `INCLUDE_strict_QC_FINAL.txt`, `INCLUDE_main_analysis_FINAL.txt` | Ordered strict and main final sets |
-| 3 | `PANTHER_SSPBC_subtype_and_ROR_main_analysis.tsv` | Sample/patient IDs, four-class subtype call, subtype probability, and ROR |
+| 3 | `PANTHER_SSPBC_intrinsic_subtypes_main_analysis.tsv` | Sample/patient IDs, four-class subtype call, and subtype probability |
 | 3 | `PANTHER_SSPBC_gene_mapping_summary.tsv`, `PANTHER_SSPBC_model_gene_coverage.tsv` | Mapping and complete model-gene coverage checks |
+
+The stage-3 result has exactly four columns in order: `sample`, `patient_id`,
+`sspbc_intrinsic_subtype`, and `sspbc_subtype_probability`. It retains
+inclusion-file order and writes no ROR column or combined subtype/ROR table.
 
 Stages 1 and 2 also write `QC_sample_flow_summary.tsv`, `QC_thresholds.tsv`,
 `QC_tool_versions.tsv`, and `QC_sessionInfo.txt` in their separate directories.
@@ -145,14 +162,13 @@ comes from stage 2. It does not independently compare against a stored reference
 membership list. Relocation validation compares that ordered list privately.
 
 Subtype input is log2(FPKM + 1), passed through BreastSubtypeR mapping with
-`RawCounts = FALSE`. SSPBC ROR calculation uses linear FPKM with the
-`ssp.ror` model in the `sspbc` package. Supported alias-to-Entrez mappings
-are checked against the recorded annotation package, and both models require
-complete gene coverage in their actual inputs. In BreastSubtypeR 1.4.0,
+`RawCounts = FALSE`. Supported alias-to-Entrez mappings are checked against
+the recorded annotation package, and the `ssp.subtype` model requires complete
+gene coverage in its actual input. In BreastSubtypeR 1.4.0,
 `impute = FALSE` disables KNN replacement of NA matrix values; it does not create
 absent model-gene rows. The explicit coverage checks remain necessary.
 
-The validated staging reference produced 506 unique samples/patients,
+The historical full-workflow staging reference produced 506 unique samples/patients,
 365/79/62 technical PASS/FLAG/FAIL, 365/444 strict/main technical sets,
 301/444 final strict/main sets, 444 subtype calls, and 444 finite ROR values.
 These are comparison targets, never values to force. See
@@ -168,18 +184,20 @@ with the same environment and output variables used above:
 
 ```powershell
 Rscript --vanilla workflows/rnaseq_qc_and_subtyping/tests/validate_sample_sets.R (Join-Path $env:PANTHER_QC_OUTPUT_DIR 'INCLUDE_strict_QC_FINAL.txt') (Join-Path $env:PANTHER_QC_OUTPUT_DIR 'INCLUDE_main_analysis_FINAL.txt')
-Rscript --vanilla workflows/rnaseq_qc_and_subtyping/tests/validate_subtyping_outputs.R $env:PANTHER_MAIN_ANALYSIS_INCLUDE_FILE (Join-Path $env:PANTHER_SSPBC_OUTPUT_DIR 'PANTHER_SSPBC_subtype_and_ROR_main_analysis.tsv')
+Rscript --vanilla workflows/rnaseq_qc_and_subtyping/tests/validate_subtyping_outputs.R $env:PANTHER_MAIN_ANALYSIS_INCLUDE_FILE (Join-Path $env:PANTHER_SSPBC_OUTPUT_DIR 'PANTHER_SSPBC_intrinsic_subtypes_main_analysis.tsv')
 ```
 
 These check counts, uniqueness, subset membership, output completeness, and
-subtype alignment. Exact comparison with the prior validated STAR outputs is
-an additional private relocation check; the bundled tests alone do not establish
-complete numerical equivalence.
+subtype alignment. The subtype test requires the exact four-column schema and
+rejects the historical combined table. The targeted regression separately checks
+exact sample/patient order, subtype labels and probabilities, subtype coverage,
+and all retained mapping-summary entries against the validated reference. The
+bundled tests alone do not establish complete numerical equivalence.
 
 ## Controlled data
 
 Inputs, pseudonymized sample/patient identifiers, individual QC decisions,
-expression matrices, subtype probabilities, and ROR values are controlled
+expression matrices, subtype calls, and subtype probabilities are controlled
 research data. Use approved storage and authorization. No real sample lists,
 private paths/configurations, clinical data, or analytical results are included
 here. Read the [controlled data notice](docs/controlled_data_notice.md) and

@@ -1,10 +1,10 @@
 # Copyright (c) 2026 Emmanouil G. Sifakis
 # SPDX-License-Identifier: MIT
 
-# PANTHER SSPBC intrinsic subtyping and SSPBC ROR calculation.
+# PANTHER SSPBC intrinsic subtyping.
 # Workflow author/maintainer: Emmanouil G. Sifakis.
 # Inputs: matching gene-by-sample FPKM/count RDS matrices and final main list.
-# Outputs: ordered subtype calls, probabilities, ROR, and mapping coverage.
+# Outputs: ordered subtype calls, probabilities, and mapping coverage.
 # Execution: stage 3, after expression QC; run from the repository root.
 
 options(stringsAsFactors = FALSE, digits = 17, scipen = 999)
@@ -253,7 +253,6 @@ subtype_model_genes <- required_model_genes(
   "BreastSubtypeR",
   "ssp.subtype"
 )
-ror_model_genes <- required_model_genes("sspbc", "ssp.ror")
 
 sample_metadata <- data.frame(
   sample = main_samples,
@@ -310,61 +309,11 @@ if (any(!is.finite(subtype_probability))) {
   stop("The subtype output contains non-finite probabilities.")
 }
 
-# SSPBC ROR uses nonnegative linear StringTie FPKM values.
-# Keep this scale separate from the log2(FPKM + 1) subtype input above.
-# When several rows map to one Entrez ID, retain the row with the largest sum.
-mapped_rows <- !is.na(feature_annotation$ENTREZID)
-ror_annotation <- feature_annotation[mapped_rows, , drop = FALSE]
-ror_expression <- fpkm_main[mapped_rows, , drop = FALSE]
-ror_annotation$row_sum <- rowSums(ror_expression)
-ror_order <- order(ror_annotation$ENTREZID, -ror_annotation$row_sum)
-ror_annotation <- ror_annotation[ror_order, , drop = FALSE]
-ror_expression <- ror_expression[ror_order, , drop = FALSE]
-unique_entrez <- !duplicated(ror_annotation$ENTREZID)
-ror_annotation <- ror_annotation[unique_entrez, , drop = FALSE]
-ror_expression <- ror_expression[unique_entrez, , drop = FALSE]
-rownames(ror_expression) <- ror_annotation$ENTREZID
-if (anyDuplicated(rownames(ror_expression))) {
-  stop("Duplicate Entrez identifiers remain in the ROR matrix.")
-}
-# Require complete ROR model-gene coverage after duplicate Entrez resolution.
-missing_ror_genes <- setdiff(ror_model_genes, rownames(ror_expression))
-if (length(missing_ror_genes) > 0L) {
-  stop(
-    "Missing ssp.ror model genes: ",
-    paste(missing_ror_genes, collapse = ", ")
-  )
-}
-
-# sspbc 1.0 resolves these package data objects during applySSP execution.
-utils::data("Gene.ID.ann", package = "sspbc", envir = .GlobalEnv)
-utils::data("sspbc.models", package = "sspbc", envir = .GlobalEnv)
-utils::data("sspbc.models.fullname", package = "sspbc", envir = .GlobalEnv)
-
-ror_prediction <- sspbc::applySSP(
-  gex = as.matrix(ror_expression),
-  id = rownames(ror_expression),
-  id.type = "EntrezGene",
-  ssp.name = "ssp.ror",
-  full.out = TRUE
-)
-ror_class <- as.character(extract_one_column(
-  ror_prediction$cl,
-  main_samples,
-  "ROR class"
-))
-ror_score <- as.numeric(sub("^c0*", "", ror_class))
-names(ror_score) <- main_samples
-if (anyNA(ror_score) || any(!is.finite(ror_score))) {
-  stop("The ROR output contains missing or non-finite values.")
-}
-
 result <- data.frame(
   sample = main_samples,
   patient_id = main_patients,
   sspbc_intrinsic_subtype = subtype_call,
   sspbc_subtype_probability = subtype_probability,
-  sspbc_ror = ror_score,
   stringsAsFactors = FALSE
 )
 if (nrow(result) != 444L || anyDuplicated(result$sample) ||
@@ -373,7 +322,7 @@ if (nrow(result) != 444L || anyDuplicated(result$sample) ||
 }
 write_tsv(
   result,
-  file.path(output_dir, "PANTHER_SSPBC_subtype_and_ROR_main_analysis.tsv")
+  file.path(output_dir, "PANTHER_SSPBC_intrinsic_subtypes_main_analysis.tsv")
 )
 
 automatic_present_ids <- unique(na.omit(as.character(automatic_entrez)))
@@ -382,7 +331,7 @@ mapping_summary <- data.frame(
   category = c(
     rep("input", 8L),
     rep("mapping", 7L),
-    rep("model_coverage", 6L),
+    rep("model_coverage", 3L),
     rep("manual_mapping", length(manual_entrez))
   ),
   item = c(
@@ -404,9 +353,6 @@ mapping_summary <- data.frame(
     "ssp_subtype_required_genes",
     "ssp_subtype_required_genes_present",
     "ssp_subtype_required_genes_missing",
-    "ssp_ror_required_genes",
-    "ssp_ror_required_genes_present",
-    "ssp_ror_required_genes_missing",
     names(manual_entrez)
   ),
   value = as.character(c(
@@ -430,13 +376,10 @@ mapping_summary <- data.frame(
     length(subtype_model_genes),
     length(subtype_model_genes) - length(missing_subtype_genes),
     length(missing_subtype_genes),
-    length(ror_model_genes),
-    length(ror_model_genes) - length(missing_ror_genes),
-    length(missing_ror_genes),
     unname(manual_entrez)
   )),
   detail = c(
-    rep("", 21L),
+    rep("", 18L),
     paste0("alias_to_entrez;annotation_alias=", unname(alias_entrez))
   ),
   stringsAsFactors = FALSE
@@ -446,41 +389,27 @@ write_tsv(
   file.path(output_dir, "PANTHER_SSPBC_gene_mapping_summary.tsv")
 )
 
-all_model_genes <- unique(c(subtype_model_genes, ror_model_genes))
 current_symbols <- AnnotationDbi::mapIds(
   annotation_database,
-  keys = all_model_genes,
+  keys = subtype_model_genes,
   column = "SYMBOL",
   keytype = "ENTREZID",
   multiVals = "first"
 )
 manual_symbol_by_entrez <- setNames(names(manual_entrez), manual_entrez)
-coverage <- rbind(
-  data.frame(
-    model = "ssp.subtype",
-    entrez_id = subtype_model_genes,
-    current_symbol = unname(current_symbols[subtype_model_genes]),
-    manual_source_symbol = unname(
-      manual_symbol_by_entrez[subtype_model_genes]
-    ),
-    automatic_mapping_present = subtype_model_genes %in%
-      automatic_present_ids,
-    final_mapping_present = subtype_model_genes %in% final_present_ids,
-    model_input_present = subtype_model_genes %in%
-      rownames(subtype_expression),
-    stringsAsFactors = FALSE
+coverage <- data.frame(
+  model = "ssp.subtype",
+  entrez_id = subtype_model_genes,
+  current_symbol = unname(current_symbols[subtype_model_genes]),
+  manual_source_symbol = unname(
+    manual_symbol_by_entrez[subtype_model_genes]
   ),
-  data.frame(
-    model = "ssp.ror",
-    entrez_id = ror_model_genes,
-    current_symbol = unname(current_symbols[ror_model_genes]),
-    manual_source_symbol = unname(manual_symbol_by_entrez[ror_model_genes]),
-    automatic_mapping_present = ror_model_genes %in%
-      automatic_present_ids,
-    final_mapping_present = ror_model_genes %in% final_present_ids,
-    model_input_present = ror_model_genes %in% rownames(ror_expression),
-    stringsAsFactors = FALSE
-  )
+  automatic_mapping_present = subtype_model_genes %in%
+    automatic_present_ids,
+  final_mapping_present = subtype_model_genes %in% final_present_ids,
+  model_input_present = subtype_model_genes %in%
+    rownames(subtype_expression),
+  stringsAsFactors = FALSE
 )
 write_tsv(
   coverage,
@@ -510,5 +439,4 @@ writeLines(
 )
 
 message("SSPBC subtype calls: ", nrow(result))
-message("SSPBC ROR values: ", sum(!is.na(result$sspbc_ror)))
 message("SSPBC output order matches the inclusion list: TRUE")
