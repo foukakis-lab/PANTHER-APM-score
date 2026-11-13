@@ -1,4 +1,4 @@
-# Nested private configuration; keep populated files outside the import tree.
+# Local configuration and credentials.
 **/config/local.*
 **/config/*.local.*
 **/config/private/
@@ -9,7 +9,7 @@
 **/.env
 **/.env.*
 
-# Controlled data and generated results at any depth.
+# Data files and generated results; explicit synthetic exceptions appear below.
 **/data/
 **/private_data/
 **/clinical/
@@ -19,10 +19,13 @@
 **/module_reorganization_validation/
 *.rds
 *.RData
+*.Rdata
+*.rdata
 *.rda
 *.xlsx
 *.xls
 *.csv
+*.csv.gz
 *.bam
 *.bai
 *.cram
@@ -54,8 +57,25 @@ PANTHER_SSPBC_sessionInfo.txt
 **/.cache/
 .Rhistory
 .RData
+.Ruserdata
 .Rproj.user/
 
 # Operating-system files.
 .DS_Store
 Thumbs.db
+
+# Shared data guide and synthetic PANTHER examples only.
+# The four allowed data files must contain synthetic data.
+!/data/
+/data/*
+!/data/README.md
+!/data/PANTHER/
+/data/PANTHER/*
+!/data/PANTHER/PANTHER_clinical.rds
+!/data/PANTHER/PANTHER_expression_log2_TMM_TPM.rds
+!/data/README_SYNTHETIC_DATA.txt
+!/data/TEX/
+/data/TEX/*
+!/data/TEX/pd.unique.mets.RData
+!/data/TEX/TEX_clinical incl microarray SEB.xlsx
+
