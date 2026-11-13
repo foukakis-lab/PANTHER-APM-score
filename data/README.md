@@ -36,7 +36,7 @@ Extract the files first if downloading them as an archive.
 | `SCAN-B/SCANB.9206.genematrix_noNeg.RData` | Gene expression matrix |
 | `SCAN-B/Supplementary_Data_Table_1_2023-01-13.xlsx` | Associated supplementary clinical and sample information (Original file name `Supplementary Data Table 1 - 2023-01-13.xlsx`) |
 
-Preserve the R object names stored within the downloaded `.Rdata` files.
+Preserve the R object names stored within the downloaded `.RData` files.
 
 ### TEX expression and probe annotation
 
@@ -45,22 +45,18 @@ Public microarray expression data are available from
 The TEX analysis uses platform
 [GPL10379](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GPL10379).
 
-The expression-loading section uses `GEOquery` to retrieve the GEO data.
-Use the local download/cache location configured in the script; the initial download requires an internet connection. 
+The main script downloads the GSE56493 series matrix and the GPL10379 annotation with `GEOquery` into TEX/GEO/ on the first run and reads them from there afterwards. 
+The MCP-counter gene list is read from its GitHub repository on every run. 
 
 The public GEO expression data do not replace the two non-public TEX inputs listed below.
 
 ## Synthetic PANTHER inputs
 
-The following example files are being prepared and are not yet included:
-
-| Intended path | Planned content |
+Synthetic versions of the two PANTHER inputs are included (made with `workflows/apm_analysis/scripts/PANTHER_make_synthetic_data.R`, seed 2027; see `README_SYNTHETIC_DATA.txt`):
+| Path | Content |
 | --- | --- |
-| `PANTHER/PANTHER_clinical.rds` | Synthetic clinical records with the variables and coding required by the analysis |
-| `PANTHER/PANTHER_expression_log2_TMM_TPM.rds` | Synthetic gene expression matrix in the input format expected by the analysis |
-
-The synthetic clinical records and expression columns must use matching fictional identifiers. 
-These files are intended for the downstream APM analysis and do not supply the raw sequencing, QC, or subtyping inputs.
+| `PANTHER/PANTHER_clinical.rds` | 2,003 simulated randomized patients with the variables and coding used by the analysis; sample_id set for 444 |
+| `PANTHER/PANTHER_expression_log2_TMM_TPM.rds` | Simulated log2(TPM + 1) matrix: 5,000 genes × the same 444 fictional samples |
 
 ## Non-public TEX inputs
 
@@ -71,18 +67,15 @@ The original versions of the following files cannot be distributed:
 | `TEX/pd.unique.mets.RData` | Clinical input loaded as the R object `pd.unique.mets` |
 | `TEX/TEX_clinical incl microarray SEB.xlsx` | Workbook used to match expression arrays to clinical sample records |
 
-Synthetic replacements are under consideration and are not yet included.
-They must preserve the required object name, column names, workbook layout, and relationships between sample identifiers. 
-The exact schema and matching rules will be checked against the final TEX analysis before preparing them.
-
-If synthetic clinical records are paired with public GEO expression samples, the sample links will be explicitly artificial. 
-Assigned treatment labels, clinical characteristics, and outcomes must not be interpreted as information about the original GEO participants.
+Synthetic versions of both files are included (made with workflows/apm_analysis/scripts/PANTHER_make_synthetic_data.R). 
+They keep the object name, column names and workbook layout. 
+Of the 140 synthetic records (SYN0001–SYN0140), 120 are linked at random to the public GSE56493 arrays; treatment labels, clinical characteristics and outcomes are simulated and say nothing about the GEO participants.
 
 ## Interpretation of synthetic examples
 
-Synthetic examples are intended only to demonstrate code execution. 
-They will contain no real PANTHER or TEX clinical records and will not reproduce the study's estimates, p-values, signature-selection results, or figures.
-They must be clearly identified as synthetic in their accompanying documentation and outputs.
+Synthetic examples demonstrate code execution and contain no real PANTHER or TEX clinical records. 
+A treatment × (HLA6 − IFN5) interaction is deliberately introduced into the synthetic BCRFS data to exercise signature selection and downstream analyses. 
+The resulting estimates, p-values and figures are illustrative and must not be interpreted as study results.
 
 ## Data handling and attribution
 
